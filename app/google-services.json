@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "69536535480",
+    "project_id": "swipe-data",
+    "storage_bucket": "swipe-data.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:69536535480:android:47f3fd5b64b5c95cca354d",
+        "android_client_info": {
+          "package_name": "com.example.tablet"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDui924Y-hwAVmYHe3nEH8OuG3m5EamHKw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

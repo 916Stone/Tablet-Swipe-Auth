@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Tablet</string>
+    <string name="settings">SETTINGS</string>
+    <string name="start">START</string>
+    <string name="data_collection_on_tablet">Data Collection on Tablet</string>
+    <string name="data_collection_on_tablet_title">Data Collection on Tablet</string>
+    <string name="enter_your_name">Enter Your Name</string>
+    <string name="title_activity_training">TrainingActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+    <string name="done">Done</string>
+    <string name="please_swipe_to_test">Please swipe to test</string>
+</resources>
