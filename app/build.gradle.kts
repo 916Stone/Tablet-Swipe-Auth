@@ -66,6 +66,5 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
-
-
+    implementation("org.apache.commons:commons-math3:3.0")
 }
