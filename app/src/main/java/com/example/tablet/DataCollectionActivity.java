@@ -105,56 +105,6 @@ public class DataCollectionActivity extends AppCompatActivity {
         });
     }
 
-    private void promptForNextActivity() {
-        new AlertDialog.Builder(this)
-                .setTitle("Proceed to Next Activity")
-                .setMessage("You have recorded " + swipeCounter + " swipes. Do you want to proceed to the next activity?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    // User confirms to proceed
-                    Intent intent = new Intent(DataCollectionActivity.this, TrainingActivity.class);
-                    intent.putStringArrayListExtra("RAW_SWIPE_DATA", new ArrayList<>(rawSwipeData));
-                    intent.putStringArrayListExtra("STATISTICAL_SWIPE_DATA", new ArrayList<>(statisticalSwipeData));
-                    startActivity(intent);
-                })
-                .setNegativeButton("No", (dialog, which) -> {
-                    // User cancels the operation
-                    dialog.dismiss();
-                })
-                .create()
-                .show();
-    }
-
-    private void shareData() {
-        try {
-            File rawDataFile = new File(getExternalFilesDir(null), userName + "_RAW.csv");
-            File statisticalDataFile = new File(getExternalFilesDir(null), userName + "_STA.csv");
-
-            writeListToFile(rawSwipeData, rawDataFile);
-            writeListToFile(statisticalSwipeData, statisticalDataFile);
-
-            ArrayList<Uri> uris = new ArrayList<>();
-            uris.add(FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", rawDataFile));
-            uris.add(FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", statisticalDataFile));
-
-            Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
-            shareIntent.setType("text/csv");
-            shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
-            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-            startActivity(Intent.createChooser(shareIntent, "Share CSV files"));
-        } catch (IOException e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error sharing data: " + e.getMessage(), Toast.LENGTH_LONG).show();
-        }
-    }
-
-    private void writeListToFile(List<String> data, File file) throws IOException {
-        FileWriter writer = new FileWriter(file);
-        for (String line : data) {
-            writer.write(line + "\n");
-        }
-        writer.close();
-    }
-
     @SuppressLint("SetTextI18n")
     @Override
     public boolean onTouchEvent(MotionEvent event) {
@@ -328,5 +278,56 @@ public class DataCollectionActivity extends AppCompatActivity {
                 initialVelocityX, initialVelocityY, finalVelocityX, finalVelocityY,
                 directionChanges, curvature, jerkMagnitude);
     }
+
+    private void promptForNextActivity() {
+        new AlertDialog.Builder(this)
+                .setTitle("Proceed to Next Activity")
+                .setMessage("You have recorded " + swipeCounter + " swipes. Do you want to proceed to the next activity?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    // User confirms to proceed
+                    Intent intent = new Intent(DataCollectionActivity.this, TrainingActivity.class);
+                    intent.putStringArrayListExtra("RAW_SWIPE_DATA", new ArrayList<>(rawSwipeData));
+                    intent.putStringArrayListExtra("STATISTICAL_SWIPE_DATA", new ArrayList<>(statisticalSwipeData));
+                    startActivity(intent);
+                })
+                .setNegativeButton("No", (dialog, which) -> {
+                    // User cancels the operation
+                    dialog.dismiss();
+                })
+                .create()
+                .show();
+    }
+
+    private void shareData() {
+        try {
+            File rawDataFile = new File(getExternalFilesDir(null), userName + "_RAW.csv");
+            File statisticalDataFile = new File(getExternalFilesDir(null), userName + "_STA.csv");
+
+            writeListToFile(rawSwipeData, rawDataFile);
+            writeListToFile(statisticalSwipeData, statisticalDataFile);
+
+            ArrayList<Uri> uris = new ArrayList<>();
+            uris.add(FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", rawDataFile));
+            uris.add(FileProvider.getUriForFile(this, getPackageName() + ".fileprovider", statisticalDataFile));
+
+            Intent shareIntent = new Intent(Intent.ACTION_SEND_MULTIPLE);
+            shareIntent.setType("text/csv");
+            shareIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, uris);
+            shareIntent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            startActivity(Intent.createChooser(shareIntent, "Share CSV files"));
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error sharing data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void writeListToFile(List<String> data, File file) throws IOException {
+        FileWriter writer = new FileWriter(file);
+        for (String line : data) {
+            writer.write(line + "\n");
+        }
+        writer.close();
+    }
+
 
 }

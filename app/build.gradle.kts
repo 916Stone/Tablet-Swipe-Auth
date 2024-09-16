@@ -1,7 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     id("com.google.gms.google-services")
-    id("com.chaquo.python")
+//    id("com.chaquo.python")
 }
 
 android {
@@ -22,11 +22,11 @@ android {
         }
     }
 
-    flavorDimensions += "pyVersion"
-    productFlavors {
-        create("py310") { dimension = "pyVersion" }
-        create("py311") { dimension = "pyVersion" }
-    }
+//    flavorDimensions += "pyVersion"
+//    productFlavors {
+//        create("py310") { dimension = "pyVersion" }
+//        create("py311") { dimension = "pyVersion" }
+//    }
 
     buildTypes {
         release {
@@ -46,16 +46,16 @@ android {
     }
 }
 
-chaquopy {
-    defaultConfig {
-        //C:\Users\Stone\anaconda3
-        buildPython("C:/Users/Stone/anaconda3/python.exe")
-    }
-    productFlavors {
-        getByName("py310") { version = "3.10" }
-        getByName("py311") { version = "3.11" }
-    }
-}
+//chaquopy {
+//    defaultConfig {
+//        //C:\Users\Stone\anaconda3
+//        buildPython("C:/Users/Stone/anaconda3/python.exe")
+//    }
+//    productFlavors {
+//        getByName("py310") { version = "3.10" }
+//        getByName("py311") { version = "3.11" }
+//    }
+//}
 
 dependencies {
 
@@ -67,4 +67,6 @@ dependencies {
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
     implementation("org.apache.commons:commons-math3:3.0")
+    implementation(files("libs/isolationForest.jar"))
+    implementation(files("libs/weka-stable-3.8.1.jar"))
 }
