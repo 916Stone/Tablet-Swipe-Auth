@@ -39,8 +39,10 @@ public class DataCollectionActivity extends AppCompatActivity {
     private int movementId;
     private float pathLength = 0;
     private float initialVelocityX = 0, initialVelocityY = 0;
+    private float finalVelocityX = 0, finalVelocityY = 0;
     private int directionChanges = 0;
     private float lastAngle = 0;
+    private float jerkX = 0, jerkY = 0;
     private float curvature = 0;
 
     private static final String TAG = "DataCollectionActivity";
@@ -89,16 +91,18 @@ public class DataCollectionActivity extends AppCompatActivity {
         
         Button doneButton = findViewById(R.id.doneButton);
         
-        doneButton.setOnClickListener(view -> new AlertDialog.Builder(this)
-                .setTitle("Share Data")
-                .setMessage("Do you want to share the collected data?")
-                .setPositiveButton("Yes", (dialog, which) -> {
-                    shareData();
-                    promptForNextActivity();
-                })
-                .setNegativeButton("No", (dialog, which) -> promptForNextActivity())
-                .create()
-                .show());
+        doneButton.setOnClickListener(view -> {
+            new AlertDialog.Builder(this)
+                    .setTitle("Share Data")
+                    .setMessage("Do you want to share the collected data?")
+                    .setPositiveButton("Yes", (dialog, which) -> {
+                        shareData();
+                        promptForNextActivity();
+                    })
+                    .setNegativeButton("No", (dialog, which) -> promptForNextActivity())
+                    .create()
+                    .show();
+        });
     }
 
     private void promptForNextActivity() {
@@ -175,8 +179,8 @@ public class DataCollectionActivity extends AppCompatActivity {
                 pathLength = 0;
                 directionChanges = 0;
                 lastAngle = 0;
-                float jerkX = 0;
-                float jerkY = 0;
+                jerkX = 0;
+                jerkY = 0;
                 curvature = 0;
                 initialVelocityX = 0;
                 initialVelocityY = 0;
@@ -220,10 +224,12 @@ public class DataCollectionActivity extends AppCompatActivity {
                     initialVelocityX = velocityX;
                     initialVelocityY = velocityY;
                 }
+                finalVelocityX = velocityX;
+                finalVelocityY = velocityY;
 
                 String moveData = formatData(swipeCounter, movementId, pointerId, time, x, y, pressure, size,
                         velocityX, velocityY, accelerationX, accelerationY, angle, duration, distance, orientation,
-                        pathLength, initialVelocityX, initialVelocityY, velocityX, velocityY,
+                        pathLength, initialVelocityX, initialVelocityY, finalVelocityX, finalVelocityY,
                         directionChanges, curvature, (float) Math.sqrt(jerkX * jerkX + jerkY * jerkY));
                 swipeData.add(moveData);
                 rawSwipeData.add(moveData);
